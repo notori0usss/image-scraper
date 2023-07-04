@@ -1,0 +1,57 @@
+<!-- myapp/index.html -->
+{% load custom_filters %}
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Page</title>
+    {% tailwind_css %}
+</head>
+<body class="bg-[#120029]">
+<div class="w-full max-w-8xl mx-auto min-h-screen flex items-end pb-24 justify-center px-16 relative">
+    <div class="w-full h-full flex items-center justify-center">
+        <div class="w-[600px] h-[600px] blur-3xl translate-x-32 opacity-40 bg-gradient-to-r from-purple-600 from-40% to-purple-700 to-60% rounded-full"></div>
+        <div class="w-[600px] h-[600px] blur-3xl -translate-x-32 filter opacity-40 bg-gradient-to-l from-blue-600 from-40% to-blue-700 to-60% rounded-full"></div>
+    </div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 space-y-16">
+        <h1 class="text-3xl md:text-5xl lg:text-7xl font-semibold text-center">Unleash the Power of AI in Your Image
+            Scraping Journey.
+        </h1>
+        <form method="post" class="flex flex-col items-center justify-center">
+            {% csrf_token %}
+            <div class="w-10/12 bg-purple-100 flex items-center gap-2 px-4 py-3 rounded-3xl outline outline-8 outline-gray-50/25">
+                <div class="bg-gradient-to-b from-blue-200/50 to-purple-200/50 h-full py-3 px-4 rounded-2xl">
+                    <h1 class="bg-gradient-to-r from-purple-600 to-purple-700 font-semibold inline-block text-transparent bg-clip-text text-lg">
+                        AS
+                    </h1>
+                </div>
+                <input class="w-11/12 py-4 px-6 text-xl text-black bg-transparent border-none focus:border-none"
+                       type="url"
+                       name="url"
+                       placeholder="Enter URL">
+                <button type="submit"
+                        class="py-3 w-4/12 rounded-2xl text-xl px-6 bg-gradient-to-r from-blue-500 via-blue-700 to-purple-600 font-semibold  ">
+                    Get Images
+                </button>
+            </div>
+
+
+        </form>
+        {% if zip_files %}
+            {% for zip_file in zip_files %}
+                <p>
+                    <a href="data:application/zip;base64,{{ zip_file.data|base64_encode }}">{{ zip_file.name }}</a>
+                </p>
+
+            {% endfor %}
+        {% else %}
+            <div>No images found.</div>
+        {% endif %}
+    </div>
+
+
+</div>
+
+
+</body>
+</html>
